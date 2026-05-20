@@ -1,4 +1,6 @@
 <?php
+require_once '../vendor/autoload.php';
+require_once __DIR__ . '/mail.php';
 
 session_start();
 
@@ -7,7 +9,6 @@ $rowCount = $_SESSION['rowCount'] ?? 0;
 unset($_SESSION['message'], $_SESSION['rowCount']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    sleep(3);
     if (!isset($_FILES['csv_file'])) {
         $message = "No file uploaded.";
     } else {
@@ -24,8 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($outputHandle === false) {
                     $message = "Unable to create output file.";
                 } else {
+                    fgetcsv($inputHandle);
+                    fputcsv($outputHandle, ['empid', 'name', 'email', 'amount']);
                     while (($row = fgetcsv($inputHandle)) !== false) {
                         fputcsv($outputHandle, $row);
+                        // sendMail($row[2], $row[1], $row[0], $row[3]);
                         $rowCount++;
                     }
                     fclose($outputHandle);
@@ -48,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV Processor</title>
+    <title>Bonus Email</title>
 
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,18 +68,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if(file_exists('processed.csv')): ?>
             <div class="mb-6 p-4 rounded-lg bg-green-100 text-green-800">
                 <p class="text-lg font-semibold">
-                    Successfully sent <span class="font-bold"><?= $rowCount === 0 ? $rowCount : $rowCount - 1?></span> emails.
+                    Successfully sent <span class="font-bold"><?= $rowCount ?></span> emails.
                 </p>
             </div>
         <?php endif; ?>
 
         <?php if(!file_exists('processed.csv')): ?>
+
+            <!-- Download Template Section -->
+            <div class="mb-6 text-center" id="download">
+
+                <a
+                    href="template.csv"
+                    download
+                    id="downloadTemplateBtn"
+                    class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+                >
+                    Download CSV Template
+                </a>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    Download and fill the template before uploading.
+                </p>
+
+            </div>
+
+            <!-- Upload Form -->
             <form
                 method="POST"
                 enctype="multipart/form-data"
-                class="space-y-6"
+                class="space-y-6 hidden"
                 id="uploadForm"
             >
+
                 <div>
                     <input
                         id="inputFile"
@@ -122,27 +147,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             d="M4 12a8 8 0 018-8v8H4z"
                         ></path>
                     </svg>
+
                 </button>
 
             </form>
+
         <?php endif; ?>
 
     </div>
-<script>
-    const form = document.getElementById('uploadForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const spinner = document.getElementById('spinner');
-    const inputFile = document.getElementById('inputFile');
+    <script>
+        const form = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const spinner = document.getElementById('spinner');
+        const inputFile = document.getElementById('inputFile');
 
-    form.addEventListener('submit', () => {
-        submitBtn.disabled = true;
-        submitBtn.classList.remove('hover:bg-blue-700');
-        submitBtn.classList.add('bg-blue-400', 'cursor-not-allowed');
-        btnText.textContent = `Please do not close the window or refresh the page...`;
-        spinner.classList.remove('hidden');
-        inputFile.classList.add('hidden');
-    });
-</script>
+        form.addEventListener('submit', () => {
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('hover:bg-blue-700');
+            submitBtn.classList.add('bg-blue-400', 'cursor-not-allowed');
+            btnText.textContent = `Please do not close the window or refresh the page...`;
+            spinner.classList.remove('hidden');
+            inputFile.classList.add('hidden');
+        });
+
+
+        const downloadBtn = document.getElementById('downloadTemplateBtn');
+        const uploadForm = document.getElementById('uploadForm');
+        const downloadDiv = document.getElementById('download');
+
+        if (downloadBtn && uploadForm) {
+
+            downloadBtn.addEventListener('click', function () {
+
+                // Show form after clicking download
+                setTimeout(() => {
+                    uploadForm.classList.remove('hidden');
+                    downloadDiv.classList.add('hidden');
+                }, 2000);
+
+            });
+
+        }
+    </script>
 </body>
 </html>

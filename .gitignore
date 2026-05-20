@@ -1,2 +1,3 @@
 src/processed.csv
 /vendor
+.env
