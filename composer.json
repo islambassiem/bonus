@@ -1,0 +1,17 @@
+{
+    "name": "islam/bonus-email",
+    "autoload": {
+        "psr-4": {
+            "Islam\\BonusEmail\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Islam",
+            "email": "islam@inaya.edu.sa"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
+    }
+}
