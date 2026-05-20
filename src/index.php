@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     fputcsv($outputHandle, ['empid', 'name', 'email', 'amount']);
                     while (($row = fgetcsv($inputHandle)) !== false) {
                         fputcsv($outputHandle, $row);
-                        // sendMail($row[2], $row[1], $row[0], $row[3]);
+                        sendMail($row[2], $row[1], $row[0], $row[3]);
                         $rowCount++;
                     }
                     fclose($outputHandle);
