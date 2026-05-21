@@ -19,9 +19,9 @@ function sendMail($email, $name, $empId, $amount) {
     $mail->CharSet    = 'UTF-8';                                   
 
     //Recipients
-    $mail->setFrom('hr@inaya.edu.sa', 'HR');
+    $mail->setFrom('hr@inaya.edu.sa', 'Annual Party 2026');
     $mail->addAddress($email, $name);                 
-    $mail->addReplyTo('hr@inaya.edu.sa', 'HR');
+    $mail->addReplyTo('hr@inaya.edu.sa', 'Annual Party 2026');
 
     //Content
     $mail->isHTML(true);
