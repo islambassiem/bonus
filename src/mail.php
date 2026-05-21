@@ -72,7 +72,7 @@ function sendMail($email, $name, $empId, $amount) {
                                     style='background:#eff6ff;
                                         border:1px solid #bfdbfe;
                                         border-radius:10px;
-                                        margin:30px 0;'>
+                                        margin:30px auto;'>
 
                                     <tr>
                                         <td style='padding:30px;text-align:center;'>
@@ -98,17 +98,6 @@ function sendMail($email, $name, $empId, $amount) {
                                         </td>
                                     </tr>
                                 </table>
-
-                                <p style='font-size:15px;color:#4b5563;line-height:1.7;'>
-                                    If you have any questions regarding this payment,
-                                    please contact the finance department.
-                                </p>
-
-                                <p style='font-size:15px;color:#111827;margin-top:40px;'>
-                                    Regards,<br>
-                                    Finance Team
-                                </p>
-
                             </td>
                         </tr>
 

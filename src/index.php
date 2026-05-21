@@ -74,30 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <?php if(!file_exists('processed.csv')): ?>
-
-            <!-- Download Template Section -->
-            <div class="mb-6 text-center" id="download">
-
-                <a
-                    href="template.csv"
-                    download
-                    id="downloadTemplateBtn"
-                    class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition"
-                >
-                    Download CSV Template
-                </a>
-
-                <p class="text-sm text-gray-500 mt-2">
-                    Download and fill the template before uploading.
-                </p>
-
-            </div>
-
             <!-- Upload Form -->
             <form
                 method="POST"
                 enctype="multipart/form-data"
-                class="space-y-6 hidden"
+                class="space-y-6"
                 id="uploadForm"
             >
 
@@ -170,25 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             spinner.classList.remove('hidden');
             inputFile.classList.add('hidden');
         });
-
-
-        const downloadBtn = document.getElementById('downloadTemplateBtn');
-        const uploadForm = document.getElementById('uploadForm');
-        const downloadDiv = document.getElementById('download');
-
-        if (downloadBtn && uploadForm) {
-
-            downloadBtn.addEventListener('click', function () {
-
-                // Show form after clicking download
-                setTimeout(() => {
-                    uploadForm.classList.remove('hidden');
-                    downloadDiv.classList.add('hidden');
-                }, 2000);
-
-            });
-
-        }
     </script>
 </body>
 </html>
