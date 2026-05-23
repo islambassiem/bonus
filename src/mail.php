@@ -25,7 +25,7 @@ function sendMail($email, $name, $empId, $amount) {
 
     //Content
     $mail->isHTML(true);
-    $mail->Subject = "Bonus for 2026";
+    $mail->Subject = "Bonus for 2025";
     $mail->Body = "
     <!DOCTYPE html>
     <html>
@@ -64,7 +64,7 @@ function sendMail($email, $name, $empId, $amount) {
                                 </p>
 
                                 <p style='font-size:16px;color:#374151;line-height:1.7;margin:0 0 25px;'>
-                                    Thank you for your hard work and dedication. We are pleased to share that you will receive the following annual bonus:
+                                    Thank you for your hard work and dedication. We are pleased to share that you will receive the following annual bonus for the year 2025:
                                 </p>
 
                                 <!-- Amount Box -->
